@@ -1,32 +1,79 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+<v-app>
+   <nav>
+    
+     <v-navigation-drawer
+        v-model="drawerleft"
+        app
+        clipped
+        left
+      >
+        <v-list dense>
+          <v-list-item @click.stop="left = !left">
+            <v-list-item-content>
+              <v-list-item-title> <router-link to="/register">Register</router-link></v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item @click.stop="left = !left">
+            <v-list-item-content>
+              <v-list-item-title> <router-link to="/login">Login</router-link></v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item @click.stop="left = !left">
+            <v-list-item-content>
+              <v-list-item-title> <router-link to="/writerecipe">Write</router-link></v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item @click.stop="left = !left">
+            <v-list-item-content>
+              <v-list-item-title>Settings</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </v-navigation-drawer>
+
+   <v-app-bar
+      app
+      fixed
+      color="primary"
+      dark
+    >
+
+      <v-btn @click="drawerleft = !drawerleft">
+          <v-icon>mdi-menu</v-icon>
+      </v-btn>
+
+      <v-spacer></v-spacer>
+
+      <v-toolbar-title>
+          <span>myRecipe</span>
+      </v-toolbar-title>
+
+      <v-spacer></v-spacer> 
+
+    </v-app-bar>
+
+    
+ </nav>
+
+    <v-main>
+      <router-view/>
+    </v-main>
+  </v-app>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+//import HelloWorld from './components/HelloWorld';
 
-#nav {
-  padding: 30px;
-}
+export default {
+  name: 'App',
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
+  components: {
+    //HelloWorld,
+  },
 
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+  data: () => ({
+      drawerleft: false
+    }),
+};
+</script>
