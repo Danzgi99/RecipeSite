@@ -21,7 +21,7 @@
           </v-list-item>
           <v-list-item @click.stop="left = !left">
             <v-list-item-content>
-              <v-list-item-title> <router-link to="/writerecipe">Write</router-link></v-list-item-title>
+              <v-list-item-title> <router-link to="/writerecipe">Write Recipe</router-link></v-list-item-title>
             </v-list-item-content>
           </v-list-item>
           <v-list-item @click.stop="left = !left">

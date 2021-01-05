@@ -6,13 +6,13 @@
                   <h2 id="heading">REGISTER</h2>
                 </v-list-item>
                 <v-list-item >
-                    <v-text-field label="Firstname" id="firstName" v-model="person.firstname"></v-text-field>
+                    <v-text-field label="Firstname" type="text" v-model="person.firstname"></v-text-field>
                 </v-list-item>
                 <v-list-item >
                     <v-text-field label="Lastname" type="text" v-model="person.lastname"></v-text-field>
                 </v-list-item> 
                 <v-list-item >
-                    <v-text-field label="Username" id="userName" v-model="person.username"></v-text-field>
+                    <v-text-field label="Username" type="text" v-model="person.username"></v-text-field>
                 </v-list-item>
                 <v-list-item >
                     <v-text-field label="eMail" type="text" v-model="person.email" :rules="emailrules" hide-details="auto"></v-text-field>
