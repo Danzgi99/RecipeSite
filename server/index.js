@@ -10,8 +10,8 @@ app.use(bodyParser.json());
 app.use(cors());
 
 // add routes
-const router = require('./routes/router.js');
+const router = require('./routes/authorization.js');
 app.use('/api', router);
 
 // run server
-app.listen(PORT, () => console.log('Server running on port '+port));
+app.listen(port, () => console.log('Server running on port http://localhost:'+port));
