@@ -36,8 +36,8 @@ router.post('/register', userMiddleware.validateRegister, (req, res, next) => {
             // wenn pw gehashed insert in DB
             db.query(
               //uuid == Universally Unique Identifier
-              'INSERT INTO users (id, username, email, password, registered) VALUES ('+uuid.v4()+','+db.escape(
-                req.body.username)+','+db.escape(req.body.email)+','+ db.escape(hash)+','+ now()+')',
+              'INSERT INTO users (username, email, password, registered, loggedIn) VALUES ('+db.escape(
+                req.body.username)+','+db.escape(req.body.email)+','+ db.escape(hash)+', NOW(), NOW())',
               (err, result) => {
                 if (err) {
                   throw err;
