@@ -35,7 +35,6 @@ router.post('/register', userMiddleware.validateRegister, (req, res, next) => {
           } else {
             // wenn pw gehashed insert in DB
             db.query(
-              //uuid == Universally Unique Identifier
               'INSERT INTO users (username, email, password, registered, loggedIn) VALUES ('+db.escape(
                 req.body.username)+','+db.escape(req.body.email)+','+ db.escape(hash)+', NOW(), NOW())',
               (err, result) => {
@@ -58,8 +57,65 @@ router.post('/register', userMiddleware.validateRegister, (req, res, next) => {
   );
 });
 
+
+
 //Login-Route
-router.post('/login', (req, res, next) => {});
+router.post('/login', (req, res, next) => {
+  db.query(
+    'SELECT * FROM users WHERE username = '+db.escape(req.body.username)+';',
+    (err, result) => {
+      //user does not exist
+      if (err) {
+        throw err;
+        return res.status(400).send({
+          msg: err
+        });
+      }
+      if (!result.length) {
+        return res.status(401).send({
+          msg: 'Username or password is incorrect!'
+        });
+      }
+      //check des verschlüsselten password
+      bcrypt.compare(
+        req.body.password,
+        result[0]['password'],
+        (bErr, bResult) => {
+          //password false
+          if (bErr) {
+            throw bErr;
+            return res.status(401).send({
+              msg: 'Username or password is incorrect!'
+            });
+          }
+          if (bResult) {
+            //speichern der Werte in Token
+            const token = jwt.sign({
+                username: result[0].username,
+                userId: result[0].idUser
+              },
+              'SECRETKEY', {
+                //gültigkeit des keys mit dem token generiert wird
+                expiresIn: '1d'
+              }
+            );
+            db.query(
+              'UPDATE users SET loggedIN = NOW() WHERE idUser = "'+result[0].id+'";'
+            );
+            return res.status(200).send({
+              msg: 'Logged in!',
+              token,
+              user: result[0]
+            });
+          }
+          return res.status(401).send({
+            msg: 'Username or password is incorrect!'
+          });
+        }
+      );
+    }
+  );
+});
 
 router.get('/writeRecipe-route', (req, res, next) => {
   res.send('Only logged in users can write');
