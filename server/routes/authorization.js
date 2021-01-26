@@ -100,7 +100,7 @@ router.post('/login', (req, res, next) => {
               }
             );
             db.query(
-              'UPDATE users SET loggedIN = NOW() WHERE idUser = "'+result[0].id+'";'
+              'UPDATE users SET loggedIn = NOW() WHERE idUser = '+result[0].idUser+';'
             );
             return res.status(200).send({
               msg: 'Logged in!',
@@ -115,10 +115,6 @@ router.post('/login', (req, res, next) => {
       );
     }
   );
-});
-
-router.get('/writeRecipe-route', (req, res, next) => {
-  res.send('Only logged in users can write');
 });
 
 

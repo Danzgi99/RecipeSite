@@ -6,25 +6,23 @@
                   <h2 id="heading">REGISTER</h2>
                 </v-list-item>
                 <v-list-item >
-                    <v-text-field label="Firstname" type="text" v-model="person.firstname"></v-text-field>
+                    <v-text-field label="Username" type="text" v-model="username"></v-text-field>
                 </v-list-item>
                 <v-list-item >
-                    <v-text-field label="Lastname" type="text" v-model="person.lastname"></v-text-field>
-                </v-list-item> 
-                <v-list-item >
-                    <v-text-field label="Username" type="text" v-model="person.username"></v-text-field>
+                    <v-text-field label="eMail" type="text" v-model="email" :rules="emailrules" hide-details="auto"></v-text-field>
                 </v-list-item>
                 <v-list-item >
-                    <v-text-field label="eMail" type="text" v-model="person.email" :rules="emailrules" hide-details="auto"></v-text-field>
+                    <v-text-field label="Password" type="password" v-model="password" :rules="pwrules" hide-details="auto"></v-text-field>
                 </v-list-item>
                 <v-list-item >
-                    <v-text-field label="Password" type="password" v-model="person.password" :rules="pwrules" hide-details="auto"></v-text-field>
+                    <v-text-field label="Password-Check" type="password" v-model="passwordcheck" :rules="pwrules" hide-details="auto"></v-text-field>
                 </v-list-item>
                 <br>
                 <v-list-item >
-                    <v-btn >
+                    <v-btn @click="register">
                       <span>REGISTER</span>
                    </v-btn>
+                   <p v-if="msg">{{ msg }}</p>
                 </v-list-item>
             </v-list>
        </v-row>  
@@ -32,20 +30,22 @@
 </template>
 
 <script>
+import Userservices from '../services/Userservices.js';
+
 export default {
   name: 'Register',
+
   data() {
-    return {
-      person: {
-        firstname: "",
-        lastname: "",
-        username:"",
-        email: "",
-        password: ""
-      },
+   return {
+      username: '',
+      email: '',
+      password: '',
+      passwordcheck: '',
+      msg: '',
+     
       pwrules: [
         value => !!value || 'Required.',
-        value => (value && value.length >= 6) || 'Min 6 characters',
+        value => (value && value.length >= 6) || 'Min 8 characters',
       ],
       emailrules: [
         value => !!value || 'Required.',
@@ -58,6 +58,24 @@ export default {
       ],
     }
   },
+
+  methods: {
+    async register() {
+      try {
+        const references = {
+          username: this.username,
+          email: this.email,
+          password: this.password,
+          passwordcheck: this.passwordcheck
+        };
+        const response = await Userservices.register(references);
+        this.msg = response.msg;
+        this.$router.push('/login');
+      } catch (error) {
+        this.msg = error.response.data.msg;
+      }
+    }
+  }
 }
 </script>
 

@@ -6,7 +6,7 @@ module.exports = {
       // username min length 5
       if (!req.body.username || req.body.username.length < 5) {
         return res.status(400).send({
-          msg: 'Please enter a username with min. 3 chars'
+          msg: 'Please enter a username with min. 5 chars'
         });
       }
 
@@ -26,8 +26,8 @@ module.exports = {
   
       // password-check passt nicht
       if (
-        !req.body.password_repeat ||
-        req.body.password != req.body.password_repeat
+        !req.body.passwordcheck ||
+        req.body.password != req.body.passwordcheck
       ) {
         return res.status(400).send({
           msg: 'Not the same password'
@@ -36,4 +36,5 @@ module.exports = {
   
       next();
     }
+    
   };

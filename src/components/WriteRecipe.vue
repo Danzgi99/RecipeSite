@@ -2,45 +2,81 @@
     <v-container>
          <v-row>
             <v-list  width="50%" >
-                <v-list-item >
-                  <h2 id="heading">Write Recipe</h2>
-                </v-list-item>
-                <v-list-item >
-                    <v-text-field label="Title" type="text" v-model="recipe.title"></v-text-field>
-                </v-list-item>
-                <v-list-item >
-                    <v-text-field label="Lebensmittel" type="text" v-model="recipe.incredients"></v-text-field>
-                </v-list-item> 
-                <v-list-item >
-                    <v-text-field label="Wie wirds gemacht?" type="text" v-model="recipe.howtoCook"></v-text-field>
-                </v-list-item>
-                <v-list-item >
-                    <v-text-field label="Was ist zu beachten?" type="text" v-model="recipe.goodtoKnow" :rules="emailrules" hide-details="auto"></v-text-field>
-                </v-list-item>
+                  <v-col cols="12">
+                    <h2 id="heading">Write Recipe</h2>
+                  </v-col>
+                  <v-col cols="12">
+                    <v-text-field
+                      type="text" 
+                      label="Title"
+                      v-model="title"
+                      color="teal"
+                    ></v-text-field>
+                  </v-col>
+                <v-col cols="12">
+                    <v-textarea
+                      label="Lebensmittel"
+                      v-model="incredients"
+                      color="teal"
+                    >
+                    </v-textarea>
+                  </v-col>
+                 <v-col cols="12">
+                    <v-textarea
+                      label="Wie wirds gemacht?"
+                      v-model="howtocook"
+                      color="teal"
+                    >
+                    </v-textarea>
+                  </v-col>
                 <br>
-                <v-list-item >
-                    <v-btn >
+                <v-col cols="12">
+                    <v-btn color="teal" @click="write">
                       <span>ADD</span>
                    </v-btn>
-                </v-list-item>
+                   <p v-if="msg">{{ msg }}</p>
+                  </v-col>
             </v-list>
        </v-row>  
     </v-container>
 </template>
 
 <script>
+import Recipeservices from '../services/Recipeservices.js';
+import {mapGetters} from 'vuex';
+
 export default {
   name: 'WriteRecipe',
   data() {
     return {
-      recipe: {
-        title: "",
-        incredients: "",
-        howtoCook:"",
-        goodtoKnow: "",
-      },
+      title: '',
+      incredients: '',
+      howtocook:'',
+      msg: ''
     }
   },
+
+  computed: {
+    ...mapGetters(['getUser'])
+  },
+
+  methods: {
+    async write() {
+      try {
+        const references = {
+          userID: this.getUser.idUser,
+          title: this.title,
+          incredients: this.incredients,
+          howtocook: this.howtocook
+        };
+        const response = await Recipeservices.writeRecipe(references);
+        this.msg = response.msg;
+        this.$router.push('/recipes');
+      } catch (error) {
+        this.msg = error.response.data.msg;
+      }
+    }
+  }
 }
 </script>
 

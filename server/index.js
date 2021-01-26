@@ -11,7 +11,9 @@ app.use(cors());
 
 // add routes
 const router = require('./routes/authorization.js');
+const reciperouter = require('./routes/recipes.js');
 app.use('/api', router);
+app.use('/api', reciperouter);
 
 // run server
 app.listen(port, () => console.log('Server running on port http://localhost:'+port));

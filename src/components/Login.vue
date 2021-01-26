@@ -6,21 +6,22 @@
                   <h2 id="heading">LOGIN</h2>
                 </v-list-item>
                 <v-list-item >
-                    <v-text-field label="eMail" type="text" v-model="emailOrUsername" :rules="eourules" hide-details="auto"></v-text-field>
+                    <v-text-field label="email or username" type="text" v-model="username" :rules="eourules" hide-details="auto"></v-text-field>
                 </v-list-item>
                 <v-list-item >
                     <v-text-field label="Password" type="password" v-model="password" :rules="pwrules" hide-details="auto"></v-text-field>
                 </v-list-item>
                 <br>
                 <v-list-item >
-                    <v-btn >
+                    <v-btn @click="login">
                       <span>LOGIN</span>
                    </v-btn>
+                   <p v-if="msg">{{ msg }}</p>
                 </v-list-item>
                 <v-list-item >
                     <p>Forgot Password?</p>
                     <p>You don't have an account?</p>
-                    <router-link to="/login" >Login</router-link>
+                    <p><router-link to="/register" >Register</router-link></p>
                 </v-list-item>
             </v-list>
        </v-row>  
@@ -28,12 +29,15 @@
 </template>
 
 <script>
+import Userservices from '../services/Userservices.js';
+
 export default {
   name: 'Login',
   data() {
     return {
-      emailOrUsername: "",
-      password:"",
+      username: '',
+      password: '',
+      msg: '',
 
       pwrules: [
         value => !!value || 'Required.',
@@ -41,6 +45,25 @@ export default {
       eourules: [
         value => !!value || 'Required.',
       ],
+    }
+  },
+
+  methods: {
+    async login() {
+      try {
+        const references = {
+          username: this.username,
+          password: this.password
+        };
+        const response = await Userservices.login(references);
+        this.msg = response.msg;
+        const token = response.token;
+        const user = response.user;
+        this.$store.dispatch('login', { token, user });
+        this.$router.push('/');
+      } catch (error) {
+        this.msg = error.response.data.msg;
+      }
     }
   }
 }
