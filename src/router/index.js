@@ -26,9 +26,14 @@ const routes = [
     component: () => import('../components/WriteRecipe.vue')
   },
   {
-    path: '/recipes',
-    name: 'Recipes',
+    path: '/userrecipes',
+    name: 'userRecipes',
     component: () => import('../components/Recipes.vue')
+  },
+  {
+    path: '/searchrecipes',
+    name: 'searchRecipes',
+    component: () => import('../components/Search.vue')
   },
   {
     path: '/about',

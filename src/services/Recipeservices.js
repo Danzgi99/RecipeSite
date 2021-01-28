@@ -10,6 +10,14 @@ export default {
   },
 
   searchRecipe(references) {
-    return axios.get(url + '/recipes', references).then(response => response.data);
+    return axios.post(url + '/searchrecipes', references).then(response => response.data);
+  },
+
+  userRecipe(references) {
+    return axios.post(url + '/userrecipes', references).then(response => response.data);
+  },
+
+  deleteRecipe(references){
+    return axios.post(url + '/deleterecipes', references).then(response => response.data);
   }
 };

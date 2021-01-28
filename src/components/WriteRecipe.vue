@@ -71,7 +71,7 @@ export default {
         };
         const response = await Recipeservices.writeRecipe(references);
         this.msg = response.msg;
-        this.$router.push('/recipes');
+        this.$router.push('/searchrecipes');
       } catch (error) {
         this.msg = error.response.data.msg;
       }

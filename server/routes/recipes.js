@@ -31,10 +31,11 @@ router.post('/writerecipe',recipeMiddleware.validateRecipe, (req, res, next) => 
 });
 
 //getrecipe
+//alle Recipes uebergeben --- bei VIELEN Rezepten so machen das immer nur bestimmte Anzahl uebergeben wird
 router.get('/recipes', (req, res) => {
   db.query(
     //DESC damit es von neu zu alt ordered
-    'SELECT * FROM recipes ORDER BY created DESC LIMIT 10;', (err, results) => {
+    'SELECT * FROM recipes ORDER BY created DESC;', (err, results) => {
         if (err) {
           throw err;
         } 
@@ -47,16 +48,57 @@ router.get('/recipes', (req, res) => {
 });
 
 //searchrecipe wo title beinhaltet......
-router.get('/recipes', (req, res) => {
+//post weil GET request should not have a body
+router.post('/searchrecipes', (req, res) => {
   db.query(
     // "%....%" == contains
-    'SELECT * FROM recipes WHERE title LIKE "%'+req.body.search+'%" ORDER BY created DESC LIMIT 10;', (err, results) => {
+    'SELECT * FROM recipes WHERE title LIKE "%'+req.body.search+'%" ORDER BY created DESC;', (err, results) => {
         if (err) {
           throw err;
         } 
+        if (!results.length) {
+          return res.status(401).send({
+            msg: 'Nothing found'
+         });
+        }
         return res.status(200).send({
           results
         });
+      }
+   );
+});
+
+//recipes of currentuser
+router.post('/userrecipes', (req, res) => {
+  db.query(
+    // "%....%" == contains
+    'SELECT * FROM recipes WHERE userID LIKE '+req.body.userID+' ORDER BY created DESC;', (err, results) => {
+        if (err) {
+          throw err;
+        } 
+        if (!results.length) {
+          return res.status(401).send({
+            msg: 'Nothing found'
+         });
+        }
+        return res.status(200).send({
+          results
+        });
+      }
+   );
+});
+//delete by recipeID
+router.post('/deleterecipes', (req, res) => {
+  db.query(
+    // "%....%" == contains
+    'DELETE FROM recipes WHERE recipeID LIKE '+req.body.recipeID+';', (err) => {
+        if (err) {
+          throw err;
+        } else {
+          return res.send({
+            msg: 'Deleted'
+          });
+        }  
       }
    );
 });

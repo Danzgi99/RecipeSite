@@ -15,12 +15,6 @@ const url = 'http://localhost:3000/api';
   const mutations = {
     SET_RECIPES: (state, recipes) => {
       state.recipes = recipes;
-    },
-    NEW_RECIPE: (state, recipes) => {
-      state.recipes = recipes;
-    },
-    RESET: state => {
-      Object.assign(state);
     }
   };
 
@@ -29,10 +23,6 @@ const url = 'http://localhost:3000/api';
       const response = await axios.get(url + '/recipes');
       commit('SET_RECIPES', response.data);
     },
-
-    searchRecipe: ({ commit }, {data}) => {
-      commit('SET_RECIPES', data);
-    }
   };
 
 export default {

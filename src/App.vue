@@ -21,7 +21,12 @@
           </v-list-item>
           <v-list-item @click.stop="drawerleft = !drawerleft">
             <v-list-item-content >
-              <v-list-item-title> <router-link to="/recipes">View Recipes</router-link></v-list-item-title>
+              <v-list-item-title> <router-link to="/searchrecipes">View Recipes</router-link></v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item @click.stop="drawerleft = !drawerleft" v-if="isLoggedIn">
+            <v-list-item-content >
+              <v-list-item-title> <router-link to="/userrecipes">View my Recipes</router-link></v-list-item-title>
             </v-list-item-content>
           </v-list-item>
           <v-list-item @click.stop="drawerleft = !drawerleft" v-if="isLoggedIn">
