@@ -1,12 +1,12 @@
 <template>
   <v-container>
     <v-row>
-      <v-card elevation="13" width="300" v-for="recipe in recipes.results" :key="recipe.id" >
+      <v-card elevation="13" width="300" v-for="recipe in recipes.results" :key="recipe.recipeID" >
           <v-card-title>{{recipe.title}}</v-card-title>
           <v-card-text>{{recipe.incredients}}</v-card-text>
           <br/>
           <v-card-text>{{recipe.howtocook}}</v-card-text>
-          <v-btn @click="deleterecipe(recipe.id)">
+          <v-btn @click="deleterecipe(recipe.recipeID)">
             <span>DELETE</span>
           </v-btn>
           <p v-if="msg">{{ msg }}</p>
