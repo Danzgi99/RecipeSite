@@ -1,12 +1,11 @@
 <template>
-    <v-container>
-         <v-row>
-            <v-list  width="50%" >
+         <v-row class="ma-10">
+            <v-list  width="100%" >
                 <v-list-item >
                   <h2 id="heading">LOGIN</h2>
                 </v-list-item>
                 <v-list-item >
-                    <v-text-field label="email or username" type="text" v-model="username" :rules="eourules" hide-details="auto"></v-text-field>
+                    <v-text-field label="Username" type="text" v-model="username" :rules="usernrules" hide-details="auto"></v-text-field>
                 </v-list-item>
                 <v-list-item >
                     <v-text-field label="Password" type="password" v-model="password" :rules="pwrules" hide-details="auto"></v-text-field>
@@ -24,8 +23,7 @@
                     <p><router-link to="/register" >Register</router-link></p>
                 </v-list-item>
             </v-list>
-       </v-row>  
-    </v-container>
+       </v-row>
 </template>
 
 <script>
@@ -42,7 +40,7 @@ export default {
       pwrules: [
         value => !!value || 'Required.',
       ],
-      eourules: [
+      usernrules: [
         value => !!value || 'Required.',
       ],
     }

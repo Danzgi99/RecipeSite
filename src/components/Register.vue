@@ -1,12 +1,12 @@
 <template>
-    <v-container>
-         <v-row>
-            <v-list  width="50%" >
+         <v-row class="ma-10">
+            <v-list  width="100%" >
                 <v-list-item >
                   <h2 id="heading">REGISTER</h2>
+                  <v-list-item-title></v-list-item-title>
                 </v-list-item>
                 <v-list-item >
-                    <v-text-field label="Username" type="text" v-model="username"></v-text-field>
+                    <v-text-field label="Username" type="text" v-model="username" :rules="unrules" hide-details="auto"></v-text-field>
                 </v-list-item>
                 <v-list-item >
                     <v-text-field label="eMail" type="text" v-model="email" :rules="emailrules" hide-details="auto"></v-text-field>
@@ -25,8 +25,7 @@
                    <p v-if="msg">{{ msg }}</p>
                 </v-list-item>
             </v-list>
-       </v-row>  
-    </v-container>
+       </v-row>   
 </template>
 
 <script>
@@ -42,7 +41,11 @@ export default {
       password: '',
       passwordcheck: '',
       msg: '',
-     
+
+      unrules: [
+        value => !!value || 'Required.',
+        value => (value && value.length >= 5) || 'Min 5 characters',
+      ],
       pwrules: [
         value => !!value || 'Required.',
         value => (value && value.length >= 6) || 'Min 8 characters',
@@ -80,5 +83,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style>
+
+
 </style>

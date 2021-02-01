@@ -1,23 +1,35 @@
 <template>
   <v-container>
-    <v-row>
+    <v-row class="ma-10">
       <v-text-field
         hide-details
-        prepend-icon="mdi-magnify"
         single-line
         v-model="searchparameter"
         label="Search for specific"
+        color="teal"
+        v-on:keyup.enter="searchRecipes()"
+
+        clear-icon="mdi-close-circle"
+        clearable
+        @click:clear="allRecipes(); msg=false"
+
+        append-outer-icon="mdi-magnify"
+        @click:append-outer="searchRecipes()"
       ></v-text-field>
-      <p v-if="msg">{{ msg }}</p>
-      <v-btn @click="searchRecipes()">
-          <span>S</span>
-          </v-btn>
-      <v-card elevation="13" width="300" v-for="recipe in getallRecipes.results" :key="recipe.id" >
-          <v-card-title>{{recipe.title}}</v-card-title>
-          <v-card-text>{{recipe.incredients}}</v-card-text>
-          <br/>
-          <v-card-text>{{recipe.howtocook}}</v-card-text>
-      </v-card>
+    </v-row>
+
+    <v-row><p v-if="msg">{{ msg }}</p></v-row>
+    
+    <v-row>
+      <v-col v-for="recipe in getallRecipes.results" :key="recipe.id">
+        <v-card width="300" :style="'border: 2px solid teal'" >
+            <v-card-title>{{recipe.title}}</v-card-title>
+            <v-card-subtitle class="ml-2">Incredients:</v-card-subtitle>
+            <v-card-text>{{recipe.incredients}}</v-card-text>
+            <v-card-subtitle class="ml-2">How to cook:</v-card-subtitle>
+            <v-card-text>{{recipe.howtocook}}</v-card-text>
+        </v-card>
+      </v-col> 
     </v-row>
   </v-container>
 </template>
@@ -44,6 +56,7 @@ import Recipeservices from '../services/Recipeservices.js';
               };
             const response = await Recipeservices.searchRecipe(reference);
             this.$store.commit('SET_RECIPES', response);
+            this.msg=false;
             } catch (error) {
              this.msg = error.response.data.msg;
             }

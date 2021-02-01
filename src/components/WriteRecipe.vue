@@ -1,7 +1,6 @@
 <template>
-    <v-container>
-         <v-row>
-            <v-list  width="50%" >
+         <v-row class="ma-10">
+            <v-list  width="100%" >
                   <v-col cols="12">
                     <h2 id="heading">Write Recipe</h2>
                   </v-col>
@@ -37,8 +36,7 @@
                    <p v-if="msg">{{ msg }}</p>
                   </v-col>
             </v-list>
-       </v-row>  
-    </v-container>
+       </v-row>
 </template>
 
 <script>
