@@ -64,8 +64,8 @@ export default {
         const references = {
           userID: this.getUser.idUser,
           title: this.title,
-          incredients: this.incredients,
-          howtocook: this.howtocook
+          incredients: this.removeLineBreak(this.incredients),
+          howtocook: this.removeLineBreak(this.howtocook)
         };
         const response = await Recipeservices.writeRecipe(references);
         this.msg = response.msg;
@@ -73,6 +73,13 @@ export default {
       } catch (error) {
         this.msg = error.response.data.msg;
       }
+    },
+
+    //enter in textarea durch Beistrich ersetzten fuer schoenere insert-from in DB
+    //die buchstaben sind alles formen die einen Zeilenumbruch darstellen
+    // gm sind modifier die z.b all matches replacen nicht nur den ersten
+    removeLineBreak(str){
+     return str.replace(/(\r\n|\n|\r)/gm,"§");
     }
   }
 }

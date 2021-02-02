@@ -1,16 +1,22 @@
 <template>
   <v-container>
-    <v-row>
-      <v-card elevation="13" width="300" v-for="recipe in recipes.results" :key="recipe.recipeID" >
-          <v-card-title>{{recipe.title}}</v-card-title>
-          <v-card-text>{{recipe.incredients}}</v-card-text>
-          <br/>
-          <v-card-text>{{recipe.howtocook}}</v-card-text>
-          <v-btn @click="deleterecipe(recipe.recipeID)">
-            <span>DELETE</span>
-          </v-btn>
-          <p v-if="msg">{{ msg }}</p>
-      </v-card>
+    <v-row class="ma-10">
+      <v-col v-for="recipe in recipes.results" :key="recipe.recipeID" >
+        <v-card 
+        elevation="13" 
+        width="300" 
+        :style="'border: 2px solid teal'" 
+        >
+            <v-card-title>{{recipe.title}}</v-card-title>
+            <v-card-text>{{recipe.incredients}}</v-card-text>
+            <br/>
+            <v-card-text>{{recipe.howtocook}}</v-card-text>
+            <v-btn @click="deleterecipe(recipe.recipeID)">
+              <span>DELETE</span>
+            </v-btn>
+            <p v-if="msg">{{ msg }}</p>
+        </v-card>
+      </v-col>
     </v-row>
   </v-container>
 </template>

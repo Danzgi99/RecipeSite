@@ -18,7 +18,6 @@
      <v-navigation-drawer
         v-model="drawerleft"
         app
-        
         left
       >
           <v-list dense>

@@ -1,5 +1,6 @@
 <template>
   <v-container>
+
     <v-row class="ma-10">
       <v-text-field
         hide-details
@@ -25,9 +26,17 @@
         <v-card width="300" :style="'border: 2px solid teal'" >
             <v-card-title>{{recipe.title}}</v-card-title>
             <v-card-subtitle class="ml-2">Incredients:</v-card-subtitle>
-            <v-card-text>{{recipe.incredients}}</v-card-text>
+            <v-card-text>
+              <v-simple-table>
+                  <tr v-for="incredients in recipe.incredients.split('§')" :key="incredients">{{incredients}}</tr>
+              </v-simple-table>
+            </v-card-text>
             <v-card-subtitle class="ml-2">How to cook:</v-card-subtitle>
-            <v-card-text>{{recipe.howtocook}}</v-card-text>
+            <v-card-text>
+              <v-simple-table>
+                  <tr v-for="howtocook in recipe.howtocook.split('§')" :key="howtocook">{{howtocook}}</tr>
+              </v-simple-table>
+            </v-card-text>
         </v-card>
       </v-col> 
     </v-row>
