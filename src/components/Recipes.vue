@@ -1,22 +1,41 @@
 <template>
   <v-container>
-    <v-row class="ma-10">
-      <v-col v-for="recipe in recipes.results" :key="recipe.recipeID" >
-        <v-card 
-        elevation="13" 
-        width="300" 
-        :style="'border: 2px solid teal'" 
+    <v-row class="ma-10"> 
+      <v-card v-if="!recipes.results">
+        <v-text>Want to write a recipe?</v-text>
+        <v-btn class="ml-10">
+          <router-link to="/writerecipe" class="teal--text">Click here</router-link>
+        </v-btn>
+      </v-card>
+      <v-expansion-panels inset>
+        <v-expansion-panel
+          v-for="recipe in recipes.results" :key="recipe.recipeID" 
+          :style="'border-bottom: 3px solid teal'"
+          class="ma-1"
         >
-            <v-card-title>{{recipe.title}}</v-card-title>
-            <v-card-text>{{recipe.incredients}}</v-card-text>
-            <br/>
-            <v-card-text>{{recipe.howtocook}}</v-card-text>
-            <v-btn @click="deleterecipe(recipe.recipeID)">
-              <span>DELETE</span>
-            </v-btn>
-            <p v-if="msg">{{ msg }}</p>
-        </v-card>
-      </v-col>
+          <v-expansion-panel-header>
+            <v-row>
+              <v-col>
+                {{recipe.title}}
+                <v-btn @click="deleterecipe(recipe.recipeID)" class="ml-10" v-if="!msg">
+                  Delete
+                </v-btn>
+                <span v-if="msg" class="ml-10"  >{{ msg }}</span>
+            </v-col>
+            </v-row>
+          </v-expansion-panel-header>
+          <v-expansion-panel-content>
+            <v-text class="ml-5">Incredients:</v-text>
+            <v-simple-table class="ma-5">
+                <tr v-for="incredients in recipe.incredients.split('§')" :key="incredients">{{incredients}}</tr>
+            </v-simple-table>
+            <v-text class="ml-5">Hot to cook:</v-text>
+            <v-simple-table class="ma-5">
+                <tr v-for="incredients in recipe.incredients.split('§')" :key="incredients">{{incredients}}</tr>
+            </v-simple-table>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+      </v-expansion-panels>
     </v-row>
   </v-container>
 </template>

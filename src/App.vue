@@ -11,7 +11,7 @@
             <v-icon color="teal">mdi-menu</v-icon>
         </v-btn>
         <v-spacer></v-spacer>
-        <v-toolbar-title class="black--text">myRecipe</v-toolbar-title>
+        <v-toolbar-title class="title">myRecipe</v-toolbar-title>
         <v-spacer></v-spacer> 
       </v-app-bar>
 
@@ -129,7 +129,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 a{
     text-decoration: none;
 }
@@ -137,4 +137,9 @@ a{
 h2{
   color: teal;
 }
+
+.title{
+  color: black; 
+}
+
 </style>

@@ -1,6 +1,5 @@
 <template>
   <v-container>
-
     <v-row class="ma-10">
       <v-text-field
         hide-details
@@ -22,25 +21,28 @@
     <v-row><p v-if="msg">{{ msg }}</p></v-row>
     
     <v-row>
-      <v-col v-for="recipe in getallRecipes.results" :key="recipe.id">
-        <v-card width="300" :style="'border: 2px solid teal'" >
-            <v-card-title>{{recipe.title}}</v-card-title>
-            <v-card-subtitle class="ml-2">Incredients:</v-card-subtitle>
-            <v-card-text>
-              <v-simple-table>
-                  <tr v-for="incredients in recipe.incredients.split('§')" :key="incredients">{{incredients}}</tr>
-              </v-simple-table>
-            </v-card-text>
-            <v-card-subtitle class="ml-2">How to cook:</v-card-subtitle>
-            <v-card-text>
-              <v-simple-table>
-                  <tr v-for="howtocook in recipe.howtocook.split('§')" :key="howtocook">{{howtocook}}</tr>
-              </v-simple-table>
-            </v-card-text>
-        </v-card>
-      </v-col> 
+      <v-expansion-panels inset>
+        <v-expansion-panel
+          v-for="recipe in getallRecipes.results" :key="recipe.id"
+          :style="'border-bottom: 3px solid teal'"
+          class="ma-1"
+        >
+          <v-expansion-panel-header>{{recipe.title}}</v-expansion-panel-header>
+          <v-expansion-panel-content>
+            <v-text class="ml-5">Incredients:</v-text>
+            <v-simple-table class="ma-5">
+                <tr v-for="incredients in recipe.incredients.split('§')" :key="incredients">{{incredients}}</tr>
+            </v-simple-table>
+            <v-text class="ml-5">Hot to cook:</v-text>
+            <v-simple-table class="ma-5">
+                <tr v-for="incredients in recipe.incredients.split('§')" :key="incredients">{{incredients}}</tr>
+            </v-simple-table>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+      </v-expansion-panels>
     </v-row>
   </v-container>
+  
 </template>
 
 <script>
@@ -52,7 +54,7 @@ import Recipeservices from '../services/Recipeservices.js';
     data() {
      return {
        searchparameter: '',
-       msg: ''
+       msg: '',
      }
     },
 
@@ -79,3 +81,15 @@ import Recipeservices from '../services/Recipeservices.js';
     },
   }
 </script>
+
+<style lang="scss">
+ 
+ .v-expansion-panel-header{
+   font-size: 140%;
+   text-transform: uppercase;
+   font-family: italic;
+ }
+
+ 
+
+</style>
