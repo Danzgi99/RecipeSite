@@ -17,8 +17,13 @@
             <v-row>
               <v-col>
                 {{recipe.title}}
-                <v-btn @click="deleterecipe(recipe.recipeID)" class="ml-10" v-if="!msg">
-                  Delete
+                <v-btn 
+                 @click="deleterecipe(recipe.recipeID)" 
+                 class="ml-10" 
+                 v-if="!msg"
+                 color="teal black--text"
+                 >
+                  DELETE
                 </v-btn>
                 <span v-if="msg" class="ml-10"  >{{ msg }}</span>
             </v-col>

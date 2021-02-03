@@ -129,7 +129,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="css">
 a{
     text-decoration: none;
 }

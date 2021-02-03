@@ -1,6 +1,6 @@
 <template>
          <v-row class="ma-10">
-            <v-list  width="100%" >
+            <v-list  width="100%" :style="'border: 3px solid teal'">
                   <v-col cols="12">
                     <h2 id="heading">Write Recipe</h2>
                   </v-col>

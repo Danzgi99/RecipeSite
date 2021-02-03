@@ -82,14 +82,12 @@ import Recipeservices from '../services/Recipeservices.js';
   }
 </script>
 
-<style lang="scss">
+<style lang="css">
  
  .v-expansion-panel-header{
    font-size: 140%;
    text-transform: uppercase;
    font-family: italic;
  }
-
- 
 
 </style>

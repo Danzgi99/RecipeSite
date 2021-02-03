@@ -1,6 +1,6 @@
 <template>
          <v-row class="ma-10">
-            <v-list  width="100%" >
+            <v-list  width="100%" :style="'border: 3px solid teal'">
                 <v-list-item >
                   <h2 id="heading">LOGIN</h2>
                 </v-list-item>
@@ -66,6 +66,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-</style>

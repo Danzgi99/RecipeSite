@@ -1,6 +1,6 @@
 <template>
          <v-row class="ma-10">
-            <v-list  width="100%" >
+            <v-list  width="100%" :style="'border: 3px solid teal'">
                 <v-list-item >
                   <h2 id="heading">REGISTER</h2>
                   <v-list-item-title></v-list-item-title>
