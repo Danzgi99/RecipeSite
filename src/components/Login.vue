@@ -5,15 +5,15 @@
                   <h2 id="heading">LOGIN</h2>
                 </v-list-item>
                 <v-list-item >
-                    <v-text-field label="Username" type="text" v-model="username" :rules="usernrules" hide-details="auto"></v-text-field>
+                    <v-text-field label="Username" type="text" v-model="username" :rules="usernrules" hide-details="auto" color="teal"></v-text-field>
                 </v-list-item>
                 <v-list-item >
-                    <v-text-field label="Password" type="password" v-model="password" :rules="pwrules" hide-details="auto"></v-text-field>
+                    <v-text-field label="Password" type="password" v-model="password" :rules="pwrules" hide-details="auto" color="teal"></v-text-field>
                 </v-list-item>
                 <br>
                 <v-list-item >
-                    <v-btn @click="login">
-                      <span>LOGIN</span>
+                    <v-btn @click="login" color="teal black--text">
+                      LOGIN
                    </v-btn>
                    <p v-if="msg">{{ msg }}</p>
                 </v-list-item>

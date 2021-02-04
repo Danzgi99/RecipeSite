@@ -6,21 +6,21 @@
                   <v-list-item-title></v-list-item-title>
                 </v-list-item>
                 <v-list-item >
-                    <v-text-field label="Username" type="text" v-model="username" :rules="unrules" hide-details="auto"></v-text-field>
+                    <v-text-field label="Username" type="text" v-model="username" :rules="unrules" hide-details="auto" color="teal"></v-text-field>
                 </v-list-item>
                 <v-list-item >
-                    <v-text-field label="eMail" type="text" v-model="email" :rules="emailrules" hide-details="auto"></v-text-field>
+                    <v-text-field label="eMail" type="text" v-model="email" :rules="emailrules" hide-details="auto" color="teal"></v-text-field>
                 </v-list-item>
                 <v-list-item >
-                    <v-text-field label="Password" type="password" v-model="password" :rules="pwrules" hide-details="auto"></v-text-field>
+                    <v-text-field label="Password" type="password" v-model="password" :rules="pwrules" hide-details="auto" color="teal"></v-text-field>
                 </v-list-item>
                 <v-list-item >
-                    <v-text-field label="Password-Check" type="password" v-model="passwordcheck" :rules="pwrules" hide-details="auto"></v-text-field>
+                    <v-text-field label="Password-Check" type="password" v-model="passwordcheck" :rules="pwrules" hide-details="auto" color="teal"></v-text-field>
                 </v-list-item>
                 <br>
                 <v-list-item >
-                    <v-btn @click="register">
-                      <span>REGISTER</span>
+                    <v-btn @click="register" color="teal black--text">
+                      REGISTER
                    </v-btn>
                    <p v-if="msg">{{ msg }}</p>
                 </v-list-item>
@@ -84,6 +84,5 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
-
 
 </style>

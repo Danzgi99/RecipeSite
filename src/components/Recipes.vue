@@ -2,7 +2,7 @@
   <v-container>
     <v-row class="ma-10"> 
       <v-card v-if="!recipes.results">
-        <v-text>Want to write a recipe?</v-text>
+        <span>Want to write a recipe?</span>
         <v-btn class="ml-10">
           <router-link to="/writerecipe" class="teal--text">Click here</router-link>
         </v-btn>
@@ -18,26 +18,32 @@
               <v-col>
                 {{recipe.title}}
                 <v-btn 
-                 @click="deleterecipe(recipe.recipeID)" 
+                 @click="[deleterecipe(recipe.recipeID), deletedrecipes.push(recipe.recipeID)]" 
                  class="ml-10" 
-                 v-if="!msg"
+                 v-if="!showdeleteMsg(recipe.recipeID)"
                  color="teal black--text"
                  >
-                  DELETE
+                  DELETE 
                 </v-btn>
-                <span v-if="msg" class="ml-10"  >{{ msg }}</span>
+                <span v-if="showdeleteMsg(recipe.recipeID)"  class="ml-10">{{ msg }}</span>
             </v-col>
             </v-row>
           </v-expansion-panel-header>
           <v-expansion-panel-content>
-            <v-text class="ml-5">Incredients:</v-text>
-            <v-simple-table class="ma-5">
-                <tr v-for="incredients in recipe.incredients.split('§')" :key="incredients">{{incredients}}</tr>
-            </v-simple-table>
-            <v-text class="ml-5">Hot to cook:</v-text>
-            <v-simple-table class="ma-5">
-                <tr v-for="incredients in recipe.incredients.split('§')" :key="incredients">{{incredients}}</tr>
-            </v-simple-table>
+            <v-row>
+              <v-col>
+                <p class="ml-5">Incredients:</p>
+                <v-simple-table class="ma-5 ml-10">
+                    <tr v-for="incredients in recipe.incredients.split('§')" :key="incredients">{{"> "+incredients}}</tr>
+                </v-simple-table>
+              </v-col>
+              <v-col>
+                <p class="ml-5">How to cook:</p>
+                <v-simple-table class="ma-5 ml-10">
+                    <tr v-for="howtocook in recipe.howtocook.split('§')" :key="howtocook">{{"> "+howtocook}}</tr>
+                </v-simple-table>
+              </v-col>
+            </v-row>
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-expansion-panels>
@@ -54,6 +60,7 @@ export default {
   data() {
     return {
       msg: '',
+      deletedrecipes: [],
       recipes:[]
     }
   },
@@ -81,16 +88,27 @@ export default {
             recipeID: recipeid,
           };
           console.log(reference);
+          console.log(this.deletedrecipes);
           const response = await Recipeservices.deleteRecipe(reference);
           this.msg = response.msg;
         } catch (error) {
           this.msg = error.response.data.msg;
         }
+      },
+
+      showdeleteMsg(recid){
+         for(var i=0; i < this.deletedrecipes.length; i++){
+           if(this.deletedrecipes[i] == recid){
+            return true
+           }
+         }
       }
   },
 
-  created(){
+  created (){
     this.userRecipes();
+    //bei page-refresh array clearen
+    this.deletedrecipes = [];
   }
 }
 </script>

@@ -27,16 +27,22 @@
           :style="'border-bottom: 3px solid teal'"
           class="ma-1"
         >
-          <v-expansion-panel-header>{{recipe.title}}</v-expansion-panel-header>
+          <v-expansion-panel-header v-onhover>{{recipe.title}}</v-expansion-panel-header>
           <v-expansion-panel-content>
-            <v-text class="ml-5">Incredients:</v-text>
-            <v-simple-table class="ma-5">
-                <tr v-for="incredients in recipe.incredients.split('§')" :key="incredients">{{incredients}}</tr>
-            </v-simple-table>
-            <v-text class="ml-5">Hot to cook:</v-text>
-            <v-simple-table class="ma-5">
-                <tr v-for="incredients in recipe.incredients.split('§')" :key="incredients">{{incredients}}</tr>
-            </v-simple-table>
+            <v-row>
+              <v-col>
+                <p class="ml-5">Incredients:</p>
+                <v-simple-table class="ma-5 ml-10">
+                    <tr v-for="incredients in recipe.incredients.split('§')" :key="incredients">{{"> "+incredients}}</tr>
+                </v-simple-table>
+              </v-col>
+              <v-col>
+                <p class="ml-5">How to cook:</p>
+                <v-simple-table class="ma-5 ml-10">
+                    <tr v-for="howtocook in recipe.howtocook.split('§')" :key="howtocook">{{"> "+howtocook}}</tr>
+                </v-simple-table>
+              </v-col>
+            </v-row>
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-expansion-panels>
@@ -79,13 +85,24 @@ import Recipeservices from '../services/Recipeservices.js';
     created(){
       this.allRecipes();
     },
+    directives: {
+    onhover: {
+      bind(el) {
+        el.onmouseover = function() {
+          el.style.fontSize = "25px";
+        };
+        el.onmouseout = function() {
+          el.style.fontSize = "15px";
+        };
+      }
+    }
+  }
   }
 </script>
 
 <style lang="css">
  
  .v-expansion-panel-header{
-   font-size: 140%;
    text-transform: uppercase;
    font-family: italic;
  }
