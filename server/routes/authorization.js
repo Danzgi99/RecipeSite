@@ -11,6 +11,7 @@ const db = require('../database/db.js');
 //Middleware-Datei einbinden um den User zu checken (z.B. ob password eingeben wurde)
 const userMiddleware = require('../middleware/users.js');
 
+const nodemailer = require('nodemailer');
 
 //Register-Route
 //ausführen der middleware mittels usermiddleware.validateRegister
@@ -116,6 +117,5 @@ router.post('/login', (req, res, next) => {
     }
   );
 });
-
 
 module.exports = router;

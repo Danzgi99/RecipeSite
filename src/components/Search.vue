@@ -18,7 +18,7 @@
       ></v-text-field>
     </v-row>
 
-    <v-row><p v-if="msg">{{ msg }}</p></v-row>
+    <v-row class="ml-5"><p v-if="msg">{{ msg }}</p></v-row>
     
     <v-row>
       <v-expansion-panels inset>

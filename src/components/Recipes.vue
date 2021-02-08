@@ -19,8 +19,8 @@
                 {{recipe.title}}
                 <v-btn 
                  @click="[deleterecipe(recipe.recipeID), deletedrecipes.push(recipe.recipeID)]" 
-                 class="ml-10" 
                  v-if="!showdeleteMsg(recipe.recipeID)"
+                 class="ml-10" 
                  color="teal black--text"
                  >
                   DELETE 

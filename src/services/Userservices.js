@@ -14,8 +14,4 @@ export default {
       .post(url + '/register/', references)
       .then(response => response.data);
   },
-
-  getSecretContent() {
-    return axios.get(url + 'secret-route/').then(response => response.data);
-  }
 };

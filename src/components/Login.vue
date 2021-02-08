@@ -18,7 +18,7 @@
                    <p v-if="msg">{{ msg }}</p>
                 </v-list-item>
                 <v-list-item >
-                    <p>Forgot Password?</p>
+                    <p><router-link to="/forgotpw" >Forgot Password?</router-link></p>
                     <p>You don't have an account?</p>
                     <p><router-link to="/register" >Register</router-link></p>
                 </v-list-item>
