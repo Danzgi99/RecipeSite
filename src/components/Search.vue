@@ -65,7 +65,7 @@ import Recipeservices from '../services/Recipeservices.js';
     },
 
     methods: {
-      ...mapActions(['allRecipes']),
+        ...mapActions(['allRecipes']),
         async searchRecipes() {
             try {
               const reference = {
@@ -79,24 +79,27 @@ import Recipeservices from '../services/Recipeservices.js';
             }
           }
     },
+
     computed:{
       ...mapGetters(['getallRecipes'])
     },
+
     created(){
       this.allRecipes();
     },
+
     directives: {
-    onhover: {
-      bind(el) {
-        el.onmouseover = function() {
-          el.style.fontSize = "25px";
-        };
-        el.onmouseout = function() {
-          el.style.fontSize = "15px";
-        };
+      onhover: {
+        bind(el) {
+          el.onmouseover = function() {
+            el.style.fontSize = "25px";
+          };
+          el.onmouseout = function() {
+            el.style.fontSize = "15px";
+          };
+        }
       }
     }
-  }
   }
 </script>
 

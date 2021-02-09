@@ -11,7 +11,7 @@
             <v-icon color="teal">mdi-menu</v-icon>
         </v-btn>
         <v-spacer></v-spacer>
-        <v-toolbar-title class="title">myRecipe</v-toolbar-title>
+        <v-toolbar-title class="title">Recipesite</v-toolbar-title>
         <v-spacer></v-spacer> 
       </v-app-bar>
 
@@ -125,6 +125,7 @@ export default {
 };
 </script>
 
+<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="css">
 a{
     text-decoration: none;
@@ -136,6 +137,6 @@ h2{
 
 .title{
   color: black; 
+  text-transform: uppercase;
 }
-
 </style>

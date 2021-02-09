@@ -19,7 +19,7 @@
                 </v-list-item>
                 <v-list-item >
                     <p>You don't have an account?</p>
-                    <p class="ml-3"><router-link to="/register">Register</router-link></p>
+                    <p class="ml-3"><router-link to="/register" class="teal--text">Register</router-link></p>
                 </v-list-item>
             </v-list>
        </v-row>

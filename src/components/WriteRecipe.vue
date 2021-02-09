@@ -4,7 +4,7 @@
                   <v-col cols="12">
                     <h2 id="heading">Write Recipe</h2>
                   </v-col>
-                  <v-col cols="12">
+                  <v-col>
                     <v-text-field
                       type="text" 
                       label="Title"
@@ -12,7 +12,7 @@
                       color="teal"
                     ></v-text-field>
                   </v-col>
-                <v-col cols="12">
+                <v-col>
                     <v-textarea
                       label="Lebensmittel"
                       v-model="incredients"
@@ -20,7 +20,7 @@
                     >
                     </v-textarea>
                   </v-col>
-                 <v-col cols="12">
+                 <v-col>
                     <v-textarea
                       label="Wie wirds gemacht?"
                       v-model="howtocook"
@@ -29,7 +29,7 @@
                     </v-textarea>
                   </v-col>
                 <br>
-                <v-col cols="12">
+                <v-col>
                     <v-btn color="teal" @click="write">
                       <span>ADD</span>
                    </v-btn>
@@ -75,7 +75,7 @@ export default {
       }
     },
 
-    //enter in textarea durch Beistrich ersetzten fuer schoenere insert-from in DB
+    //enter in textarea durch Beistrich ersetzten fuer schoenere insert-form in DB
     //die buchstaben sind alles formen die einen Zeilenumbruch darstellen
     // gm sind modifier die z.b all matches replacen nicht nur den ersten
     removeLineBreak(str){
@@ -84,7 +84,3 @@ export default {
   }
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-</style>
