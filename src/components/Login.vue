@@ -11,16 +11,15 @@
                     <v-text-field label="Password" type="password" v-model="password" :rules="pwrules" hide-details="auto" color="teal"></v-text-field>
                 </v-list-item>
                 <br>
-                <v-list-item >
+                <v-list-item>
                     <v-btn @click="login" color="teal black--text">
                       LOGIN
                    </v-btn>
                    <p v-if="msg">{{ msg }}</p>
                 </v-list-item>
                 <v-list-item >
-                    <p><router-link to="/forgotpw" >Forgot Password?</router-link></p>
                     <p>You don't have an account?</p>
-                    <p><router-link to="/register" >Register</router-link></p>
+                    <p class="ml-3"><router-link to="/register">Register</router-link></p>
                 </v-list-item>
             </v-list>
        </v-row>
