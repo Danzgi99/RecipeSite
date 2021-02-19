@@ -33,6 +33,11 @@ const routes = [
     path: '/searchrecipes',
     name: 'searchRecipes',
     component: () => import('../components/Search.vue')
+  },
+  {
+    path: '/forgotpw',
+    name: 'forgotpw',
+    component: () => import('../components/Forgotpw.vue')
   }
 ]
 

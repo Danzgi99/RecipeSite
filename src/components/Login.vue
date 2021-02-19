@@ -18,8 +18,9 @@
                    <p v-if="msg">{{ msg }}</p>
                 </v-list-item>
                 <v-list-item >
-                    <p>You don't have an account?</p>
-                    <p class="ml-3"><router-link to="/register" class="teal--text">Register</router-link></p>
+                    <p class="ml-3"><router-link to="/forgotpw" class="teal--text">Forgot Password?</router-link></p>
+                    <p class="ml-5">You don't have an account?</p>
+                    <p class="ml-1"><router-link to="/register" class="teal--text">Register here</router-link></p>
                 </v-list-item>
             </v-list>
        </v-row>

@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 
 const bcrypt = require('bcryptjs');
-const uuid = require('uuid');
 const jwt = require('jsonwebtoken');
 
 //Datenbankverbung -- einbindung der datei
@@ -116,6 +115,86 @@ router.post('/login', (req, res, next) => {
       );
     }
   );
+});
+
+//code per email senden und den frontend uebergeben
+router.post('/forgotpw', (req, res, next) => {
+  db.query(
+    'SELECT idUser, email FROM users WHERE username = '+db.escape(req.body.username)+';',
+    (err, result) => {
+      //user does not exist
+      if (err) {
+        throw err;
+        return res.status(400).send({
+          msg: err
+        });
+      }
+      if (!result.length) {
+        return res.status(401).send({
+          msg: 'Username is incorrect or does not exist!'
+        });
+      }
+      if (result.length) {
+
+          const code=Math.random().toString().slice(2,11);
+        
+          // create transporter object with smtp server details
+          const transporter = nodemailer.createTransport({
+            host: 'smtp.gmail.com',
+            port: 587,
+            auth: {
+              user: 'recipesite.services@gmail.com',
+              pass: 'recipes911'
+            }
+          });
+
+          transporter.sendMail({
+            from: 'recipesite.services@gmail.com',
+            to: result[0].email,
+            subject: 'Change-Password-Code',
+            text: "Here is your Code to change your password: "+code
+        });
+      
+        return res.send({
+          code
+        });
+      }
+      else{
+        return res.status(401).send({
+          msg: 'Something went wrong!'
+        });
+      }
+    }
+  );
+});
+
+
+//change password
+router.post('/changepw', userMiddleware.validatePWchange, (req, res, next) => {
+  
+        bcrypt.hash(req.body.password, 10, (err, hash) => {
+          if (err) {
+            return res.status(500).send({
+              msg: err
+            });
+          } else {
+            // wenn pw gehashed insert in DB
+            db.query(
+              'UPDATE users SET password='+db.escape(hash)+'WHERE username="'+req.body.username+'";',
+              (err, result) => {
+                if (err) {
+                  throw err;
+                  return res.status(400).send({
+                    msg: err
+                  });
+                }
+                return res.send({
+                  msg: 'Changed'
+                });
+              }
+            );
+          }
+        });
 });
 
 module.exports = router;

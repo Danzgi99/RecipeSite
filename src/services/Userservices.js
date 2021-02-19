@@ -14,4 +14,12 @@ export default {
       .post(url + '/register/', references)
       .then(response => response.data);
   },
+
+  sendMail(references){
+    return axios.post(url + '/forgotpw', references).then(response => response.data);
+  },
+
+  setnewPW(references){
+    return axios.post(url + '/changepw', references).then(response => response.data);
+  }
 };
