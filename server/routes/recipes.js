@@ -1,10 +1,6 @@
 const express = require('express');
 const router = express.Router();
 
-const bcrypt = require('bcryptjs');
-const uuid = require('uuid');
-const jwt = require('jsonwebtoken');
-
 //Datenbankverbung -- einbindung der datei
 const db = require('../database/db.js');
 

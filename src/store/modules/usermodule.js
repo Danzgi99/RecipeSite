@@ -1,11 +1,11 @@
 import Axios from 'axios'
 
-const getDefaultState = () => {
-  return {
-    token: '',
-    user: {}
+  const getDefaultState = () => {
+    return {
+      token: '',
+      user: {}
+    };
   };
-};
 
   const state = getDefaultState();
   

@@ -2,7 +2,7 @@
          <v-row class="ma-10">
             <v-list  width="100%" :style="'border: 3px solid teal'">
                 <v-list-item >
-                  <h2 id="heading">GET MAIL</h2>
+                  <h2 id="heading">Change Password</h2>
                 </v-list-item>
                 <v-list-item >
                     <v-text-field label="Your Username" type="text" v-model="username" 

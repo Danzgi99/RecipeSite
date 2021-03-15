@@ -4,7 +4,7 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-//Datenbankverbung -- einbindung der datei
+//Datenbankverbindung -- einbindung der datei
 const db = require('../database/db.js');
 
 //Middleware-Datei einbinden um den User zu checken (z.B. ob password eingeben wurde)
@@ -76,7 +76,7 @@ router.post('/login', (req, res, next) => {
           msg: 'Username or password is incorrect!'
         });
       }
-      //check des verschlüsselten password
+      //check des verschluesselten password
       bcrypt.compare(
         req.body.password,
         result[0]['password'],
@@ -95,7 +95,7 @@ router.post('/login', (req, res, next) => {
                 userId: result[0].idUser
               },
               'SECRETKEY', {
-                //gültigkeit des keys mit dem token generiert wird
+                //gültigkeit des keys mit dem der token generiert wird
                 expiresIn: '1d'
               }
             );
@@ -125,9 +125,6 @@ router.post('/forgotpw', (req, res, next) => {
       //user does not exist
       if (err) {
         throw err;
-        return res.status(400).send({
-          msg: err
-        });
       }
       if (!result.length) {
         return res.status(401).send({
@@ -184,9 +181,6 @@ router.post('/changepw', userMiddleware.validatePWchange, (req, res, next) => {
               (err, result) => {
                 if (err) {
                   throw err;
-                  return res.status(400).send({
-                    msg: err
-                  });
                 }
                 return res.send({
                   msg: 'Changed'
