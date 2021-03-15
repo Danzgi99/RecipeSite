@@ -141,7 +141,7 @@ router.post('/forgotpw', (req, res, next) => {
             port: 587,
             auth: {
               user: 'recipesite.services@gmail.com',
-              pass: 'recipes911'
+              pass: '*****'
             }
           });
 
