@@ -10,7 +10,7 @@ const recipeMiddleware = require('../middleware/recipe.js');
 router.post('/writerecipe',recipeMiddleware.validateRecipe, (req, res, next) => {
   db.query(
     'INSERT INTO recipes(userID, title, incredients, howtocook, created) VALUES ('+db.escape(req.body.userID)+','
-    +db.escape(req.body.title)+','+ db.escape(req.body.incredients)+','+ db.escape(req.body.howtocook)+', NOW())',
+    +db.escape(req.body.title)+','+ db.escape(req.body.incredients)+','+ db.escape(req.body.howtocook)+', NOW());',
     (err, result) => {
       if (err) {
         throw err;
@@ -98,5 +98,52 @@ router.post('/deleterecipes', (req, res) => {
       }
    );
 });
-  
+
+router.post('/addLike', (req, res, next) => {
+  db.query(
+    'INSERT INTO liketable(rID, uID) VALUES ('+db.escape(req.body.recipeID)+','+db.escape(req.body.userID)+');',
+    (err) => {
+      if (err) {
+        throw err;
+      }
+      return res.status(201).send({
+        msg: 'LIKED'
+        });
+    }
+  );
+});
+
+router.post('/deleteLike', (req, res, next) => {
+  db.query(
+    'DELETE FROM liketable WHERE rID = "'+db.escape(req.body.recipeID)+'" AND uID = "'+db.escape(req.body.userID)+'";',
+    (err) => {
+      if (err) {
+        throw err;
+      }
+      return res.status(201).send({
+        msg: 'UNLIKED'
+        });
+    }
+  );
+});
+
+router.post('/getlikedRecipe', (req, res) => {
+  db.query(
+    // "%....%" == contains
+    'SELECT rID FROM liketable WHERE uID LIKE '+req.body.userID+';', (err, results) => {
+        if (err) {
+          throw err;
+        } 
+        if (!results.length) {
+          return res.status(401).send({
+            msg: 'No likes'
+         });
+        }
+        return res.status(200).send({
+          results
+        });
+      }
+   );
+});
+
 module.exports = router;

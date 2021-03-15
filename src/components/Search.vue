@@ -18,7 +18,7 @@
       ></v-text-field>
     </v-row>
 
-    <v-row class="ml-5"><p v-if="msg">{{ msg }}</p></v-row>
+    <v-row class="ml-5"><p v-if="searchmsg">{{ searchmsg }}</p></v-row>
     
     <v-row>
       <v-expansion-panels inset>
@@ -27,7 +27,29 @@
           :style="'border-bottom: 3px solid teal'"
           class="ma-1"
         >
-          <v-expansion-panel-header v-onhover>{{recipe.title}}</v-expansion-panel-header>
+          <v-expansion-panel-header v-onhover>
+            <v-row>
+              <v-col>
+                {{recipe.title}}
+                <v-btn 
+                 @click="[like(recipe.recipeID), likedrecipes.push(recipe.recipeID)]" 
+                 v-if="!showLikedMsg(recipe.recipeID)"
+                 class="ml-10" 
+                 color="teal black--text"
+                 >
+                  LIKE 
+                </v-btn>
+                <v-btn 
+                 @click="[unlike(recipe.recipeID), removefromliked(recipe.recipeID)]" 
+                 v-if="showLikedMsg(recipe.recipeID)"
+                 class="ml-10" 
+                 color="teal black--text"
+                 >
+                  UNLIKE 
+                </v-btn>
+            </v-col>
+            </v-row>
+          </v-expansion-panel-header>
           <v-expansion-panel-content>
             <v-row>
               <v-col>
@@ -60,7 +82,9 @@ import Recipeservices from '../services/Recipeservices.js';
     data() {
      return {
        searchparameter: '',
-       msg: '',
+       searchmsg: '',
+       likedrecipes: [],
+       likemsg: '',
      }
     },
 
@@ -73,19 +97,86 @@ import Recipeservices from '../services/Recipeservices.js';
               };
             const response = await Recipeservices.searchRecipe(reference);
             this.$store.commit('SET_RECIPES', response);
-            this.msg=false;
+            this.searchmsg=false;
             } catch (error) {
-             this.msg = error.response.data.msg;
+             this.searchmsg = error.response.data.msg;
+            }
+          },
+
+          async like(recipeid){
+            try {
+              const reference = {
+                recipeID: recipeid,
+                userID: this.getUser.idUser
+              };
+              const response = await Recipeservices.likeRecipe(reference);
+              this.likemsg = response.msg;
+            } catch (error) {
+              this.likemsg = error.response.data.msg;
+            }
+          },
+
+          async unlike(recipeid){
+            try {
+              const reference = {
+                recipeID: recipeid,
+                userID: this.getUser.idUser
+              };
+              const response = await Recipeservices.unlikeRecipe(reference);
+              this.likemsg = response.msg;
+            } catch (error) {
+              this.likemsg = error.response.data.msg;
+            }
+          },
+
+          //gelikede Recipes in Array speichern damit
+          //festgestelt werden kann ob LIKE oder UNLIKE Button displayed
+          async getlikedrecipes(){
+            try {
+              this.likedrecipes=[];
+              const reference = {
+                userID: this.getUser.idUser
+              };
+              const response = await Recipeservices.getlikedRecipe(reference);
+              for(var i=0; i < response.results.length; i++){
+                this.likedrecipes.push(response.results[i].rID);
+              }
+              this.likemsg = response.msg;
+            } catch (error) {
+              this.likemsg = error.response.data.msg;
+            }
+          },
+
+          //v-ifs bei Buttons
+          //true = LIKE, false = UNLIKE
+          showLikedMsg(recid){
+            for(var i=0; i < this.likedrecipes.length; i++){
+              if(this.likedrecipes[i] == recid){
+                return true
+              }
+            }
+          },
+
+          //unliked Recipes aus dem Array loeschen
+          //dafuer Arrayindex von RecipeID herausfinden
+          removefromliked(recid){
+            for(var i=0; i < this.likedrecipes.length; i++){
+              if(this.likedrecipes[i] == recid){
+                var idIndex = this.likedrecipes.indexOf(this.likedrecipes[i])
+                this.likedrecipes.splice(idIndex, 1);
+              }
             }
           }
     },
 
     computed:{
-      ...mapGetters(['getallRecipes'])
+      ...mapGetters(['getallRecipes']),
+      ...mapGetters(['getUser'])
     },
 
     created(){
       this.allRecipes();
+      this.getlikedrecipes();
     },
 
     directives: {
