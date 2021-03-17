@@ -31,5 +31,5 @@ export default {
 
   getlikedRecipe(references){
     return axios.post(url + '/getlikedRecipe', references).then(response => response.data);
-  }
+  },
 };

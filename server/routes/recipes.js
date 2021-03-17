@@ -9,8 +9,8 @@ const recipeMiddleware = require('../middleware/recipe.js');
 
 router.post('/writerecipe',recipeMiddleware.validateRecipe, (req, res, next) => {
   db.query(
-    'INSERT INTO recipes(userID, title, incredients, howtocook, created) VALUES ('+db.escape(req.body.userID)+','
-    +db.escape(req.body.title)+','+ db.escape(req.body.incredients)+','+ db.escape(req.body.howtocook)+', NOW());',
+    'INSERT INTO recipes(userID, title, incredients, howtocook, created, likes) VALUES ('+db.escape(req.body.userID)+','
+    +db.escape(req.body.title)+','+ db.escape(req.body.incredients)+','+ db.escape(req.body.howtocook)+', NOW(), 0);',
     (err, result) => {
       if (err) {
         throw err;
@@ -86,7 +86,6 @@ router.post('/userrecipes', (req, res) => {
 //delete by recipeID
 router.post('/deleterecipes', (req, res) => {
   db.query(
-    // "%....%" == contains
     'DELETE FROM recipes WHERE recipeID LIKE '+req.body.recipeID+';', (err) => {
         if (err) {
           throw err;
@@ -99,37 +98,49 @@ router.post('/deleterecipes', (req, res) => {
    );
 });
 
+//like
 router.post('/addLike', (req, res, next) => {
   db.query(
     'INSERT INTO liketable(rID, uID) VALUES ('+db.escape(req.body.recipeID)+','+db.escape(req.body.userID)+');',
     (err) => {
-      if (err) {
-        throw err;
-      }
-      return res.status(201).send({
-        msg: 'LIKED'
-        });
+      db.query(
+        'UPDATE recipes SET likes = likes + 1 WHERE recipeID = '+db.escape(req.body.recipeID)+';',
+        (err) => {
+          if (err) {
+            throw err;
+          }
+          return res.status(201).send({
+            msg: 'LIKED'
+            });
+        }
+      );
     }
   );
 });
 
+//unlike
 router.post('/deleteLike', (req, res, next) => {
   db.query(
     'DELETE FROM liketable WHERE rID = "'+db.escape(req.body.recipeID)+'" AND uID = "'+db.escape(req.body.userID)+'";',
     (err) => {
-      if (err) {
-        throw err;
-      }
-      return res.status(201).send({
-        msg: 'UNLIKED'
-        });
+      db.query(
+        'UPDATE recipes SET likes = likes - 1 WHERE recipeID = '+db.escape(req.body.recipeID)+';',
+        (err) => {
+          if (err) {
+            throw err;
+          }
+          return res.status(201).send({
+            msg: 'UNLIKED'
+            });
+        }
+      );
     }
   );
 });
 
+//vom User gelikede RecipeIDs uebergeben
 router.post('/getlikedRecipe', (req, res) => {
   db.query(
-    // "%....%" == contains
     'SELECT rID FROM liketable WHERE uID LIKE '+req.body.userID+';', (err, results) => {
         if (err) {
           throw err;

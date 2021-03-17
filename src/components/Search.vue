@@ -33,7 +33,7 @@
                 {{recipe.title}}
                 <v-btn 
                  @click="[like(recipe.recipeID), likedrecipes.push(recipe.recipeID)]" 
-                 v-if="!showLikedMsg(recipe.recipeID)"
+                 v-if="isLoggedIn && !showLikedMsg(recipe.recipeID)"
                  class="ml-10" 
                  color="teal black--text"
                  >
@@ -41,12 +41,13 @@
                 </v-btn>
                 <v-btn 
                  @click="[unlike(recipe.recipeID), removefromliked(recipe.recipeID)]" 
-                 v-if="showLikedMsg(recipe.recipeID)"
+                 v-if="isLoggedIn && showLikedMsg(recipe.recipeID)"
                  class="ml-10" 
                  color="teal black--text"
                  >
                   UNLIKE 
                 </v-btn>
+                <span class="ml-10">{{recipe.likes}} LIKES</span>
             </v-col>
             </v-row>
           </v-expansion-panel-header>
@@ -85,6 +86,7 @@ import Recipeservices from '../services/Recipeservices.js';
        searchmsg: '',
        likedrecipes: [],
        likemsg: '',
+       zahl: 0,
      }
     },
 
@@ -141,7 +143,6 @@ import Recipeservices from '../services/Recipeservices.js';
               for(var i=0; i < response.results.length; i++){
                 this.likedrecipes.push(response.results[i].rID);
               }
-              this.likemsg = response.msg;
             } catch (error) {
               this.likemsg = error.response.data.msg;
             }
@@ -166,17 +167,20 @@ import Recipeservices from '../services/Recipeservices.js';
                 this.likedrecipes.splice(idIndex, 1);
               }
             }
-          }
+          },
     },
 
     computed:{
       ...mapGetters(['getallRecipes']),
-      ...mapGetters(['getUser'])
+      ...mapGetters(['getUser']),
+      ...mapGetters(['isLoggedIn'])
     },
 
     created(){
       this.allRecipes();
-      this.getlikedrecipes();
+      if(this.isLoggedIn){
+        this.getlikedrecipes();
+      }
     },
 
     directives: {
